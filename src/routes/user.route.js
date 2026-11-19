@@ -140,10 +140,6 @@ router.get("/head",async(req,res)=>{
   res.render("head-/head",{student:allStudents , teacher})
 })
 
-router.get("/head/dashboard", (req, res) => {
-  res.redirect("/head");
-});
-
 
 //HEAD STUDENT PART
 router.get("/head/students",async (req,res)=>{
