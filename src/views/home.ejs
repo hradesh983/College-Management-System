@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ishwar Kripa Vidya Mandir — Student Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Sidebar -->
+  <div class="flex">
+    <aside class="w-64 bg-blue-800 text-white min-h-screen p-6 hidden md:block">
+      <h2 class="text-2xl font-bold mb-8">Ishwar Kripa <br> Vidya Mandir</h2>
+      <nav class="space-y-4">
+        <a href="#" class="block hover:text-yellow-300"><i class="fa fa-home mr-2"></i>Dashboard</a>
+        <a href="/profile?email=<%= email %>" class="block hover:text-yellow-300"><i class="fa fa-user mr-2"></i>My Profile</a>
+        <a href="/sub?classNo=<%= student1.classNo %>" class="block hover:text-yellow-300">
+          <i class="fa fa-book mr-2"></i>Subjects
+      </a>
+      
+        <!-- <a href="#" class="block hover:text-yellow-300"><i class="fa fa-clipboard-check mr-2"></i>Attendance</a> -->
+        <a href="/student/timetable?classNo=<%= student1.classNo %>" class="block hover:text-yellow-300"><i class="fa fa-calendar-alt mr-2"></i>Time Table</a>
+        <a href="#" class="block hover:text-yellow-300"><i class="fa fa-bullhorn mr-2"></i>Notices</a>
+        <a href="/login" class="block hover:text-red-400 mt-4"><i class="fa fa-sign-out-alt mr-2"></i>Logout</a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 p-6">
+      <!-- Header -->
+      <div class="bg-white p-5 rounded-lg shadow mb-6">
+        <div class="flex justify-between items-center">
+          <div>
+            <h1 class="text-2xl font-semibold">Welcome back, 👋</h1>
+            <p class="text-gray-500">Have a great learning day!</p>
+            <p class="text-gray-600 font-medium"><%= student1.name %></p>
+          </div>
+          <div class="text-right">
+            <p class="text-sm text-gray-600">Class</p>
+            <p class="font-bold text-lg"><%= student1.classNo  %></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="grid md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-white p-5 rounded-lg shadow">
+          <h2 class="font-semibold mb-2">Parents</h2>
+          <p class="text-gray-600 text-sm">Father Name:  <%= student1.fatherName %><br>
+          Mother Name: <%= student1.motherName %></p>
+        </div>
+        <!-- <div class="bg-white p-5 rounded-lg shadow">
+          <h2 class="font-semibold mb-2">Overall Attendance</h2>
+          <p class="text-2xl font-bold text-green-600">90.2%</p>
+        </div> -->
+        <div class="bg-white p-5 rounded-lg shadow">
+          <h2 class="font-semibold mb-2">Upcoming Events</h2>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>📘 Maths Unit Test: 25 Aug</li>
+            <li>👨‍👩‍👧 PTM: 30 Aug</li>
+            <li>📚 Library Week: Return books</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Attendance Summary -->
+      <!-- <div class="bg-white p-5 rounded-lg shadow mb-6">
+        <h2 class="font-semibold mb-4">Attendance Summary</h2>
+        <div class="grid md:grid-cols-4 gap-4">
+          <div class="bg-gray-50 p-3 rounded text-center">
+            <p class="font-bold">Mathematics</p>
+            <p class="text-green-600 font-semibold">92%</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded text-center">
+            <p class="font-bold">Physics</p>
+            <p class="text-red-600 font-semibold">0%</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded text-center">
+            <p class="font-bold">Chemistry</p>
+            <p class="text-yellow-600 font-semibold">81%</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded text-center">
+            <p class="font-bold">English</p>
+            <p class="text-green-600 font-semibold">95%</p>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Timetable -->
+ <!-- Timetable -->
+<div class="bg-white p-5 rounded-lg shadow mb-6">
+  <h2 class="font-semibold mb-4">Class Timetable</h2>
+
+  <% if (Timetable.length === 0) { %>
+      <p class="text-gray-500">No timetable found for your class.</p>
+  <% } else { %>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full text-sm">
+      <thead>
+        <tr class="bg-gray-200 text-left">
+          <th class="p-2">Day</th>
+          <th class="p-2">Time</th>
+          <th class="p-2">Subject</th>
+          <th class="p-2">Teacher</th>
+          <th class="p-2">Room</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% Timetable.forEach(row => { %>
+          <tr class="border-b">
+            <td class="p-2"><%= row.day %></td>
+            <td class="p-2"><%= row.startTime %> - <%= row.endTime %></td>
+            <td class="p-2"><%= row.subject %></td>
+            <td class="p-2"><%= row.teacherName %></td>
+            <td class="p-2"><%= row.roomNo %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <% } %>
+
+  <a href="/student/timetable?classNo=<%= student1.classNo %>" 
+     class="text-blue-600 text-sm font-semibold mt-2 block">
+     View Full Timetable →
+  </a>
+</div>
+
+
+      <!-- Subjects & Teachers -->
+      <div class="bg-white p-5 rounded-lg shadow mb-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Subjects</h2>
+    
+        <!-- Table Header -->
+        <div class="grid grid-cols-2 gap-4 font-semibold text-gray-700 border-b pb-2 mb-2">
+            <div>Subject</div>
+        </div>
+    
+        <!-- Table Rows -->
+        <% subjects.forEach(subject => { %>
+            <div class="grid grid-cols-2 gap-4 border-b py-2 text-gray-800">
+                <div><%= subject.name %></div>
+            </div>
+        <% }) %>
+    </div>
+    
+</main>
+</div>
+</body>
+</html>
+    
